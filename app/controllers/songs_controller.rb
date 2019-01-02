@@ -70,6 +70,7 @@ class SongsController < ApplicationController
   end
 
   def update
+    raise params.inspect
     @song = Song.find(params[:id])
 
     @song.update(song_params)
