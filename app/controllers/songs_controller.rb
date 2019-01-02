@@ -51,17 +51,21 @@ class SongsController < ApplicationController
 
   def edit
     if params[:artist_id]
-      params[:nested] = 1
-      artist = Artist.find_by(id: params[:artist_id])
-      if artist.nil?
-        redirect_to artists_path, alert: "Artist not found."
+      if Artist.exists?(params[:artist_id])
+        artist = Artist.find(params[:artist_id])
+        if artist.songs.exists?(params[:id])
+          @artist_id = params[:artist_id]
+          @song = artist.songs.find(params[:id])
+        else
+          redirect_to artist_songs_path(artist), alert: "Song not found"
+        end
       else
-        @song = artist.songs.find_by(id: params[:id])
-        redirect_to artist_songs_path(artist), alert: "Song not found." if @song.nil?
+        redirect_to artists_path, alert: "Artist not found"
       end
-    else
-      params[:nested] = nil
+    elsif Song.exists?(params[:id])
       @song = Song.find(params[:id])
+    else
+      redirect_to songs_path
     end
   end
 
