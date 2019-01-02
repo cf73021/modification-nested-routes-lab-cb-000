@@ -57,7 +57,6 @@ class SongsController < ApplicationController
     else
       @song = Song.find(params[:id])
     end
-  end
 
   def update
     @song = Song.find(params[:id])
