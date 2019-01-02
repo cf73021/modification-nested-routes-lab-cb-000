@@ -6,10 +6,10 @@ class SongsController < ApplicationController
       if @artist.nil?
         redirect_to artists_path, alert: "Artist not found"
       else
-        @songs = @artist.songs 
+        @songs = @artist.songs
       end
     else
-      @songs = Song.all 
+      @songs = Song.all
     end
   end
 
@@ -25,10 +25,10 @@ class SongsController < ApplicationController
     end
   end
 
-  def new 
+  def new
     if params[:artist_id]
       if Artist.exists?(params[:artist_id])
-        @song = Artist.find(params[:artist_id]).songs.new 
+        @song = Artist.find(params[:artist_id]).songs.new
       else
         redirect_to artists_path, alert: "Artist not found"
       end
@@ -41,9 +41,9 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
 
     if @song.save
-      redirect_to @song 
+      redirect_to @song
     else
-      render :new 
+      render :new
     end
   end
 
@@ -63,7 +63,7 @@ class SongsController < ApplicationController
     elsif Song.exists?(params[:id])
       @song = Song.find(params[:id])
     else
-      redirect_to songs_path 
+      redirect_to songs_path
     end
   end
 
@@ -89,7 +89,7 @@ class SongsController < ApplicationController
 
   private
 
-  def song_params 
+  def song_params
     params.require(:song).permit(:title, :artist_name, :artist_id)
   end
 end
